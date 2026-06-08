@@ -1,0 +1,270 @@
+@include('layouts.alayout.sidebar')
+
+@section('content')
+
+<main class="dashboard-content">
+    <div class="container-fluid px-3 px-lg-4 py-4">
+
+        <!-- Header -->
+        <div class="page-heading">
+            <div class="page-heading-copy">
+                <span class="page-icon">
+                    <i class="bi bi-people"></i>
+                </span>
+
+                <div>
+                    <p class="eyebrow mb-1">Management</p>
+                    <h1 class="h3 mb-1">Teachers</h1>
+                    <p class="text-muted mb-0">
+                        Review teacher accounts, account status, and other details.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Panel -->
+        <section class="panel mt-3">
+
+            <div class="panel-header">
+                <div>
+                    <h2 class="h5 mb-1 section-title">
+                        <i class="bi bi-table"></i>
+                        <span>Teacher List</span>
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Search, review, and manage teacher accounts.
+                    </p>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <input
+                        class="form-control form-control-sm table-search"
+                        type="search"
+                        placeholder="Search teachers">
+
+                    <a class="btn btn-primary btn-sm"
+                       href="{{ url('/admin/add-user') }}">
+                        <i class="bi bi-person-plus"></i>
+                        Add User
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse ($users as $user)
+                            <tr>
+                                <td>
+                                    <p class="fw-semibold mb-0">
+                                        {{ $user->name }}
+                                    </p>
+                                </td>
+
+                                <td>{{ $user->email }}</td>
+
+                                <td>
+                                    <span class="badge bg-primary">
+                                        {{ ucfirst($user->role) }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ $user->created_at->format('d M Y') }}
+                                </td>
+
+                                <td class="text-end">
+                                <button
+                                    type="button"
+                                    class="btn btn-warning btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editModal{{ $user->id }}">
+                                    Edit
+                                </button>
+                                <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <form action="{{ url('/admin/users/' . $user->id) }}"
+                                                method="POST">
+
+                                                @csrf
+                                                @method('PUT')
+
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Edit User
+                                                    </h5>
+
+                                                    <button type="button"
+                                                        class="btn-close"
+                                                        data-bs-dismiss="modal">
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body">
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label d-block text-start">Nama</label>
+
+                                                        <input
+                                                            type="text"
+                                                            name="name"
+                                                            class="form-control"
+                                                            value="{{ $user->name }}">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label d-block text-start">Email</label>
+
+                                                        <input
+                                                            type="email"
+                                                            name="email"
+                                                            class="form-control"
+                                                            value="{{ $user->email }}">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label d-block text-start">Role</label>
+
+                                                        <select
+                                                            name="role"
+                                                            class="form-select">
+
+                                                            <option
+                                                                value="guru"
+                                                                {{ $user->role == 'guru' ? 'selected' : '' }}>
+                                                                Guru
+                                                            </option>
+
+                                                            <option
+                                                                value="siswa"
+                                                                {{ $user->role == 'siswa' ? 'selected' : '' }}>
+                                                                Siswa
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="modal-footer">
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                        Batal
+                                                    </button>
+
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-primary">
+                                                        Simpan
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ $user->id }}">
+                                        Delete
+                                    </button>
+                                    <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    Yakin ingin menghapus user
+                                                    <strong>{{ $user->name }}</strong>?
+                                                </div>
+
+                                                <div class="modal-footer">
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                        Batal
+                                                    </button>
+
+                                                    <form action="{{ url('/admin/users/' . $user->id) }}"
+                                                        method="POST">
+
+                                                        @csrf
+                                                        @method('DELETE')
+
+                                                        <button type="submit"
+                                                            class="btn btn-danger">
+                                                            Hapus
+                                                        </button>
+
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    Tidak ada data user
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-3">
+                {{ $users->links() }}
+            </div>
+
+        </section>
+
+    </div>
+</main>
+
+
+
+
+@endsection
