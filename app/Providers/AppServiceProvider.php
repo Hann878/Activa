@@ -20,10 +20,10 @@ class AppServiceProvider extends ServiceProvider
             AuthRepository::class,
         );
 
-        // $this->app->bind(
-        //     TeacherRepositoryInterface::class,
-        //     TeacherRepository::class,
-        // );
+        $this->app->bind(
+            TeacherRepositoryInterface::class,
+            TeacherRepository::class,
+        );
     }
 
     /**

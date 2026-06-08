@@ -123,6 +123,40 @@
 
                     </div>
 
+
+                        <!-- Student Fields -->
+
+                    <div
+                        id="studentFields"
+                        style="display:none;">
+
+                        <hr>
+
+                        <h5 class="mb-3">
+                            Student Information
+                        </h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Class
+                                </label>
+
+                                <select name="class_id" class="form-select">
+                                    <option value="" selected disabled>Choose Class</option>
+                                    @foreach($classes as $class)
+                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                     <!-- Teacher Fields -->
 
                     <div
@@ -206,6 +240,8 @@
         </section>
 
     </div>
+
+
 </main>
 
 <script>
@@ -214,12 +250,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const role = document.getElementById('role');
     const teacherFields = document.getElementById('teacherFields');
 
+    const studentFields = document.getElementById('studentFields');
+
     role.addEventListener('change', function () {
 
         if (this.value === 'guru') {
             teacherFields.style.display = 'block';
+            studentFields.style.display = 'none';
+        } else if (this.value === 'siswa') {
+            teacherFields.style.display = 'none';
+            studentFields.style.display = 'block';
         } else {
             teacherFields.style.display = 'none';
+            studentFields.style.display = 'none';
         }
 
     });

@@ -49,10 +49,10 @@
             <div class="col-12 col-sm-6 col-xl-3">
               <article class="metric-card metric-danger">
                 <div class="metric-top">
-                  <span class="metric-label">Total Jurnal</span>
+                  <span class="metric-label">Total Guru</span>
                   <span class="metric-icon"><i class="bi bi-journal-text" aria-hidden="true"></i></span>
                 </div>
-                <div class="metric-value">{{ $totalJournals ?? '0' }}</div>
+                <div class="metric-value">{{ $totalTeachers ?? '0' }}</div>
               </article>
             </div>
           </section>

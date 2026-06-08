@@ -31,6 +31,12 @@ class UpdateUserRequest extends FormRequest
                 Rule::unique('users')->ignore($this->user)
             ],
             'role' => 'required|in:guru,siswa'
+            ,
+            'password' => 'nullable|min:6',
+            'nip' => 'required_if:role,guru',
+            'subject' => 'required_if:role,guru',
+            'address' => 'required_if:role,guru',
+            'class_id' => 'required_if:role,siswa'
         ];
     }
 }

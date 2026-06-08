@@ -52,12 +52,57 @@ class UserService
 
     public function update(User $user, array $data)
     {
-        $user->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'role' => $data['role']
-        ]);
-        return $user;
+        return DB::transaction(function () use ($user, $data) {
+            $updateData = [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'role' => $data['role']
+            ];
+
+            if (!empty($data['password'])) {
+                $updateData['password'] = Hash::make($data['password']);
+            }
+
+            $user->update($updateData);
+
+            // If role switched to siswa, ensure teacher record removed and student created/updated
+            if ($data['role'] === 'siswa') {
+                Teacher::where('user_id', $user->id)->delete();
+
+                $student = Students::where('user_id', $user->id)->first();
+                if ($student) {
+                    $student->update([
+                        'class_id' => $data['class_id'] ?? $student->class_id
+                    ]);
+                } else {
+                    $lastStudent = Students::orderBy('id', 'desc')->first();
+                    $lastNumber = $lastStudent ? (int) substr($lastStudent->nis, -3) : 0;
+                    $newNis = '2026' . str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+
+                    Students::create([
+                        'user_id' => $user->id,
+                        'nis' => $newNis,
+                        'class_id' => $data['class_id'] ?? null
+                    ]);
+                }
+            }
+
+            // If role switched to guru, ensure student record removed and teacher created/updated
+            if ($data['role'] === 'guru') {
+                Students::where('user_id', $user->id)->delete();
+
+                Teacher::updateOrCreate([
+                    'user_id' => $user->id
+                ], [
+                    'user_id' => $user->id,
+                    'nip' => $data['nip'] ?? null,
+                    'subject' => $data['subject'] ?? null,
+                    'address' => $data['address'] ?? null
+                ]);
+            }
+
+            return $user;
+        });
     }
 
     public function delete(User $user)

@@ -11,9 +11,9 @@ class AdminController extends Controller
         $totalUsers = \App\Models\User::count();
         $totalStudents = \App\Models\Students::count();
         $totalClasses = \App\Models\Classes::count();
-        $totalJournals = \App\Models\Journals::count();
+        $totalTeachers = \App\Models\Teacher::count();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalStudents', 'totalClasses', 'totalJournals'));
+        return view('admin.dashboard', compact('totalUsers', 'totalStudents', 'totalClasses', 'totalTeachers'));
     }
 
 }

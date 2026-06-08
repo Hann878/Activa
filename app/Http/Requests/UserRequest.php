@@ -30,6 +30,7 @@ class UserRequest extends FormRequest
             'nip' => 'required_if:role,guru',
             'subject' => 'required_if:role,guru',
             'address' => 'required_if:role,guru',
+            'class_id' => 'required_if:role,siswa'
         ];
     }
 }

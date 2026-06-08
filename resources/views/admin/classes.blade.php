@@ -44,7 +44,7 @@
                         placeholder="Search classes">
 
                     <a class="btn btn-primary btn-sm"
-                       href="{{ url('/admin/add-class') }}">
+                       href="{{ url('admin/classes/add-class') }}">
                         <i class="bi bi-plus"></i>
                         Add Class
                     </a>
@@ -84,7 +84,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
 
-                                            <form action="{{ url('/admin/classes/' . $class->id) }}"
+                                            <form action="{{ url('admin/classes/' . $class->id) }}"
                                                 method="POST">
 
                                                 @csrf

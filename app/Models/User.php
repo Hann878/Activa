@@ -32,7 +32,12 @@ class User extends Authenticatable
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->hasOne(Teacher::class);
+    }
+    
+    public function student()
+    {
+        return $this->hasOne(Students::class, 'user_id');
     }
     
 }

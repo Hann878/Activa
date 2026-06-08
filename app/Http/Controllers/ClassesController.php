@@ -21,7 +21,7 @@ class ClassesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.add-class');
     }
 
     /**
@@ -29,7 +29,13 @@ class ClassesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'major' => 'required'
+        ]);
+
+        Classes::create($request->all());
+        return redirect('admin/classes')->with('success', 'Kelas berhasil ditambahkan.');
     }
 
     /**
@@ -53,7 +59,13 @@ class ClassesController extends Controller
      */
     public function update(Request $request, Classes $classes)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'major' => 'required'
+        ]);
+
+        $classes->update($request->all());
+        return redirect('admin/classes')->with('success', 'Kelas berhasil diupdate.');
     }
 
     /**
@@ -61,6 +73,7 @@ class ClassesController extends Controller
      */
     public function destroy(Classes $classes)
     {
-        //
+        $classes->delete();
+        return redirect('admin/classes')->with('success', 'Kelas berhasil dihapus.');
     }
 }

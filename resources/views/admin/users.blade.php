@@ -147,7 +147,8 @@
 
                                                         <select
                                                             name="role"
-                                                            class="form-select">
+                                                            class="form-select"
+                                                            onchange="toggleRoleFields({{ $user->id }}, this.value)">
 
                                                             <option
                                                                 value="guru"
@@ -162,6 +163,47 @@
                                                             </option>
 
                                                         </select>
+                                                    </div>
+
+                                                    <!-- Teacher Fields -->
+
+                                                    <div id="teacherFields{{ $user->id }}" style="{{ $user->role == 'guru' ? '' : 'display:none;' }}">
+
+                                                        <hr>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">NIP</label>
+                                                            <input type="text" name="nip" class="form-control" value="{{ optional($user->teacher)->nip }}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">Subject</label>
+                                                            <input type="text" name="subject" class="form-control" value="{{ optional($user->teacher)->subject }}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">Address</label>
+                                                            <textarea name="address" class="form-control">{{ optional($user->teacher)->address }}</textarea>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <!-- Student Fields -->
+
+                                                    <div id="studentFields{{ $user->id }}" style="{{ $user->role == 'siswa' ? '' : 'display:none;' }}">
+
+                                                        <hr>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">Class</label>
+                                                            <select name="class_id" class="form-select">
+                                                                <option value="" selected disabled>Choose Class</option>
+                                                                @foreach($classes as $class)
+                                                                    <option value="{{ $class->id }}" {{ optional($user->student)->class_id == $class->id ? 'selected' : '' }}>{{ $class->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
                                                     </div>
 
                                                 </div>
@@ -264,4 +306,24 @@
     </div>
 </main>
 
+@endsection
+
+@section('scripts')
+<script>
+function toggleRoleFields(id, value) {
+    const teacher = document.getElementById('teacherFields' + id);
+    const student = document.getElementById('studentFields' + id);
+
+    if (value === 'guru') {
+        if (teacher) teacher.style.display = '';
+        if (student) student.style.display = 'none';
+    } else if (value === 'siswa') {
+        if (teacher) teacher.style.display = 'none';
+        if (student) student.style.display = '';
+    } else {
+        if (teacher) teacher.style.display = 'none';
+        if (student) student.style.display = 'none';
+    }
+}
+</script>
 @endsection

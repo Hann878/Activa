@@ -36,6 +36,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy']);
 
     Route::get('/admin/classes', [ClassesController::class, 'index']);
+    Route::get('/admin/classes/add-class', [ClassesController::class, 'create']);
+    Route::post('/admin/classes/add-class', [ClassesController::class, 'store']);
+    Route::put('/admin/classes/{class}', [ClassesController::class, 'update']);
+    Route::delete('/admin/classes/{class}', [ClassesController::class, 'destroy']);
 
     Route::get('/admin/students', [StudentsController::class, 'index']);
     Route::put('/admin/students/{student}', [StudentsController::class, 'update']);
