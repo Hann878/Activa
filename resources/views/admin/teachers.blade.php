@@ -1,4 +1,4 @@
-@include('layouts.alayout.sidebar')
+@extends('layouts.alayout.sidebar')
 
 @section('content')
 
@@ -42,12 +42,6 @@
                         class="form-control form-control-sm table-search"
                         type="search"
                         placeholder="Search teachers">
-
-                    <a class="btn btn-primary btn-sm"
-                       href="{{ url('/admin/add-user') }}">
-                        <i class="bi bi-person-plus"></i>
-                        Add User
-                    </a>
                 </div>
             </div>
 
@@ -55,161 +49,195 @@
                 <table class="table align-middle mb-0">
                     <thead>
                         <tr>
-                            <th>User</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th>Joined</th>
+                            <th>Id</th>
+                            <th>User Id</th>
+                            <th>Name</th>
+                            <th>NIP</th>
+                            <th>Subject</th>
+                            <th>Address</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @forelse ($users as $user)
+                        @forelse ($teachers as $teacher)
                             <tr>
-                                <td>
-                                    <p class="fw-semibold mb-0">
-                                        {{ $user->name }}
-                                    </p>
-                                </td>
 
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $teacher->id }}</td>
+
+                                <td>{{ $teacher->user_id }}</td>
 
                                 <td>
-                                    <span class="badge bg-primary">
-                                        {{ ucfirst($user->role) }}
-                                    </span>
+                                    {{ $teacher->user->name }}
                                 </td>
 
-                                <td>
-                                    <span class="badge bg-success">
-                                        Active
-                                    </span>
-                                </td>
+                                <td>{{ $teacher->nip }}</td>
 
-                                <td>
-                                    {{ $user->created_at->format('d M Y') }}
-                                </td>
+                                <td>{{ $teacher->subject }}</td>
+
+                                <td>{{ $teacher->address }}</td>
 
                                 <td class="text-end">
-                                <button
-                                    type="button"
-                                    class="btn btn-warning btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editModal{{ $user->id }}">
-                                    Edit
-                                </button>
-                                <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
 
-                                            <form action="{{ url('/admin/users/' . $user->id) }}"
-                                                method="POST">
+                                    <button
+                                        type="button"
+                                        class="btn btn-warning btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editModal{{ $teacher->id }}">
+                                        Edit
+                                    </button>
 
-                                                @csrf
-                                                @method('PUT')
+                                    <div class="modal fade"
+                                        id="editModal{{ $teacher->id }}"
+                                        tabindex="-1">
 
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">
-                                                        Edit User
-                                                    </h5>
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
 
-                                                    <button type="button"
-                                                        class="btn-close"
-                                                        data-bs-dismiss="modal">
-                                                    </button>
-                                                </div>
+                                                <form
+                                                    action="{{ url('/admin/teachers/' . $teacher->id) }}"
+                                                    method="POST">
 
-                                                <div class="modal-body">
+                                                    @csrf
+                                                    @method('PUT')
 
-                                                    <div class="mb-3">
-                                                        <label class="form-label d-block text-start">Nama</label>
+                                                    <div class="modal-header">
 
-                                                        <input
-                                                            type="text"
-                                                            name="name"
-                                                            class="form-control"
-                                                            value="{{ $user->name }}">
+                                                        <h5 class="modal-title">
+                                                            Edit Teacher
+                                                        </h5>
+
+                                                        <button
+                                                            type="button"
+                                                            class="btn-close"
+                                                            data-bs-dismiss="modal">
+                                                        </button>
+
                                                     </div>
 
-                                                    <div class="mb-3">
-                                                        <label class="form-label d-block text-start">Email</label>
+                                                    <div class="modal-body">
 
-                                                        <input
-                                                            type="email"
-                                                            name="email"
-                                                            class="form-control"
-                                                            value="{{ $user->email }}">
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">
+                                                                Nama
+                                                            </label>
+
+                                                            <input
+                                                                type="text"
+                                                                name="name"
+                                                                class="form-control"
+                                                                value="{{ $teacher->user->name }}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">
+                                                                Email
+                                                            </label>
+
+                                                            <input
+                                                                type="email"
+                                                                name="email"
+                                                                class="form-control"
+                                                                value="{{ $teacher->user->email }}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">
+                                                                NIP
+                                                            </label>
+
+                                                            <input
+                                                                type="text"
+                                                                name="nip"
+                                                                class="form-control"
+                                                                value="{{ $teacher->nip }}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">
+                                                                Subject
+                                                            </label>
+
+                                                            <input
+                                                                type="text"
+                                                                name="subject"
+                                                                class="form-control"
+                                                                value="{{ $teacher->subject }}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label d-block text-start">
+                                                                Address
+                                                            </label>
+
+                                                            <textarea
+                                                                name="address"
+                                                                class="form-control"
+                                                                rows="3">{{ $teacher->address }}</textarea>
+                                                        </div>
+
                                                     </div>
 
-                                                    <div class="mb-3">
-                                                        <label class="form-label d-block text-start">Role</label>
+                                                    <div class="modal-footer">
 
-                                                        <select
-                                                            name="role"
-                                                            class="form-select">
+                                                        <button
+                                                            type="button"
+                                                            class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                            Batal
+                                                        </button>
 
-                                                            <option
-                                                                value="guru"
-                                                                {{ $user->role == 'guru' ? 'selected' : '' }}>
-                                                                Guru
-                                                            </option>
+                                                        <button
+                                                            type="submit"
+                                                            class="btn btn-primary">
+                                                            Simpan
+                                                        </button>
 
-                                                            <option
-                                                                value="siswa"
-                                                                {{ $user->role == 'siswa' ? 'selected' : '' }}>
-                                                                Siswa
-                                                            </option>
-
-                                                        </select>
                                                     </div>
 
-                                                </div>
+                                                </form>
 
-                                                <div class="modal-footer">
-
-                                                    <button
-                                                        type="button"
-                                                        class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">
-                                                        Batal
-                                                    </button>
-
-                                                    <button
-                                                        type="submit"
-                                                        class="btn btn-primary">
-                                                        Simpan
-                                                    </button>
-
-                                                </div>
-
-                                            </form>
-
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
 
                                     <button
                                         type="button"
                                         class="btn btn-danger btn-sm"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal{{ $user->id }}">
+                                        data-bs-target="#deleteModal{{ $teacher->id }}">
                                         Delete
                                     </button>
-                                    <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1">
+
+                                    <div class="modal fade"
+                                        id="deleteModal{{ $teacher->id }}"
+                                        tabindex="-1">
+
                                         <div class="modal-dialog">
                                             <div class="modal-content">
 
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Konfirmasi Hapus</h5>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"></button>
+
+                                                    <h5 class="modal-title">
+                                                        Konfirmasi Hapus
+                                                    </h5>
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn-close"
+                                                        data-bs-dismiss="modal">
+                                                    </button>
+
                                                 </div>
 
                                                 <div class="modal-body">
-                                                    Yakin ingin menghapus user
-                                                    <strong>{{ $user->name }}</strong>?
+
+                                                    Yakin ingin menghapus teacher
+
+                                                    <strong>
+                                                        {{ $teacher->user->name }}
+                                                    </strong> ?
+
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -221,13 +249,15 @@
                                                         Batal
                                                     </button>
 
-                                                    <form action="{{ url('/admin/users/' . $user->id) }}"
+                                                    <form
+                                                        action="{{ url('/admin/teachers/' . $teacher->id) }}"
                                                         method="POST">
 
                                                         @csrf
                                                         @method('DELETE')
 
-                                                        <button type="submit"
+                                                        <button
+                                                            type="submit"
                                                             class="btn btn-danger">
                                                             Hapus
                                                         </button>
@@ -241,30 +271,25 @@
                                     </div>
 
                                 </td>
+
                             </tr>
                         @empty
+
                             <tr>
-                                <td colspan="6" class="text-center py-4">
-                                    Tidak ada data user
+                                <td colspan="7" class="text-center py-4">
+                                    Tidak ada data teacher
                                 </td>
                             </tr>
+
                         @endforelse
                     </tbody>
 
                 </table>
             </div>
 
-            <!-- Pagination -->
-            <div class="mt-3">
-                {{ $users->links() }}
-            </div>
-
         </section>
 
     </div>
 </main>
-
-
-
 
 @endsection

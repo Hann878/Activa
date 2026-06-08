@@ -23,9 +23,7 @@ class TeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'nip' => 'required|unique:teachers,nip',
+            
         ];
     }
 }

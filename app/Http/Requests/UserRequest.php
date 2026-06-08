@@ -26,7 +26,10 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'role' => 'required|in:guru,siswa'
+            'role' => 'required|in:guru,siswa',
+            'nip' => 'required_if:role,guru',
+            'subject' => 'required_if:role,guru',
+            'address' => 'required_if:role,guru',
         ];
     }
 }

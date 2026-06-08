@@ -13,7 +13,7 @@ use App\Http\Controllers\UserController;
 // });
 
 Route::get('/tes', function(){
-    return view('admin.classes');
+    return view('admin.add-user');
 });
 //Autentikasi Routes
 Route::get('/login', [AuthController::class, 'login']);
@@ -41,6 +41,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/students/{student}', [StudentsController::class, 'update']);
 
     Route::get('/admin/teachers', [TeacherController::class, 'index']);
+    Route::put('/admin/teachers/{teacher}', [TeacherController::class, 'update']);
+    Route::delete('/admin/teachers/{teacher}', [TeacherController::class, 'destroy']);
 
 });
 

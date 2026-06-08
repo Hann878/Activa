@@ -9,7 +9,7 @@ class Teacher extends Model
     protected $fillable = [
         'nip',
         'subject',
-        'addres'
+        'address'
     ];
 
     public function user()
