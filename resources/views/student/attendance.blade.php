@@ -59,6 +59,8 @@
 
                 @elseif(!$todayAttendance->check_out_time)
 
+
+    
                     <div class="mb-3">
                         <strong>Jam Masuk:</strong>
                         {{ $todayAttendance->check_in_time }}

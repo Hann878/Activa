@@ -18,6 +18,7 @@
                             <tr>
                                 <th>Nama Siswa</th>
                                 <th>Tanggal</th>
+                                <th>Jam Absen</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -26,6 +27,7 @@
                                 <tr>
                                     <td>{{ $attendance->student?->user?->name ?? '-' }}</td>
                                     <td>{{ $attendance->date }}</td>
+                                    <td>{{ $attendance->check_in_time ?? '-' }}</td>
                                     <td>{{ $attendance->status }}</td>
                                 </tr>
                             @empty

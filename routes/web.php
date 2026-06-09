@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 // Route::get('/tes', function(){
-//     return view('admin.add-user');
+//     return view('alayout.sidebar');
 // });
 //Autentikasi Routes
 Route::get('/login', [AuthController::class, 'login']);
