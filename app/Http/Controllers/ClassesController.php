@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classes;
+use App\Models\Students;
 use Illuminate\Http\Request;
-
+          
 class ClassesController extends Controller
 {
     /**
@@ -12,10 +13,23 @@ class ClassesController extends Controller
      */
     public function index()
     {
-        $classes = Classes::paginate(10);
-        return view('admin.classes', compact('classes'));
-    }
+        $student = Students::with(['user', 'class'])
+            ->where('user_id', auth()->id())
+            ->first();
 
+        $classmates = collect();
+
+        if ($student && $student->class_id) {
+            $classmates = Students::with('user')
+                ->where('class_id', $student->class_id)
+                ->get();
+        }
+
+        return view('student.classes', compact(
+            'student',
+            'classmates'
+        ));
+    }
     /**
      * Show the form for creating a new resource.
      */

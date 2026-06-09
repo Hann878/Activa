@@ -65,7 +65,6 @@ class UserService
 
             $user->update($updateData);
 
-            // If role switched to siswa, ensure teacher record removed and student created/updated
             if ($data['role'] === 'siswa') {
                 Teacher::where('user_id', $user->id)->delete();
 

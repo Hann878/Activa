@@ -10,4 +10,20 @@ class Classes extends Model
         'name',
         'major',
     ];
+
+    public function teachers()
+    {
+        return $this->belongsTo(
+            Teacher::class,
+            'teacher_id'
+        );
+    }
+
+    public function students()
+    {
+        return $this->hasMany(
+            Students::class,
+            'class_id'
+        );
+    }
 }

@@ -22,5 +22,14 @@ class Students extends Model
         return $this->belongsTo(Classes::class);
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendances::class);
+    }
+
+    public function jurnals()
+    {
+        return $this->hasMany(Journals::class);
+    }
     
 }

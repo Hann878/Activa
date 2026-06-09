@@ -44,14 +44,14 @@
             <span class="nav-text">Students</span>
         </a>
 
-        <a class="nav-link {{ request()->is('guru/attendance*') ? 'active' : '' }}"
-            href="{{ url('/guru/attendance') }}">
+        <a class="nav-link {{ request()->is('guru/attendances*') ? 'active' : '' }}"
+            href="{{ url('/guru/attendances') }}">
             <span class="nav-icon"><i class="bi bi-bar-chart-line"></i></span>
             <span class="nav-text">Absensi</span>
         </a>
 
-        <a class="nav-link {{ request()->is('guru/journal*') ? 'active' : '' }}"
-            href="{{ url('/guru/journal') }}">
+        <a class="nav-link {{ request()->is('guru/journals*') ? 'active' : '' }}"
+            href="{{ url('/guru/journals') }}">
             <span class="nav-icon"><i class="bi bi-table"></i></span>
             <span class="nav-text">Journal</span>
         </a>
@@ -82,9 +82,6 @@
                 <span class="d-none d-sm-inline">{{ auth()->user()->name }}</span>
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="{{ url('/guru/profile') }}">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="dropdown-item">

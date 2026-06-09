@@ -80,8 +80,6 @@
                 <span class="d-none d-sm-inline">{{ auth()->user()->name }}</span>
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="{{ url('/siswa/profile') }}">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

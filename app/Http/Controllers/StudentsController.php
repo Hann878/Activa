@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classes;
 use App\Models\Students;
 use Illuminate\Http\Request;
 
@@ -13,10 +12,11 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        $students = Students::with(['user', 'class'])->get();
-        $classes = Classes::all();
+        $student = Students::with(['user', 'class'])
+        ->where('user_id', auth()->id())
+        ->first();
 
-        return view('admin.students', compact('students', 'classes'));
+        return view('student.dashboard', compact('student'));
     }
 
     /**

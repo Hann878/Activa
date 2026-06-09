@@ -83,9 +83,6 @@
                 <span class="d-none d-sm-inline">{{ auth()->user()->name }}</span>
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="{{ url('/admin/profile') }}">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="dropdown-item">
